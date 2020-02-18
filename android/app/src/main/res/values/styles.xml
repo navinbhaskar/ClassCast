@@ -2,8 +2,19 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
-        <item name="colorControlActivated">@android:color/white</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="TrackSelectionDialogThemeOverlay" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="windowNoTitle">false</item>
+    </style>
+
+    <style name="PlayerTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="PlayerTheme.Spherical">
+        <item name="surface_type">spherical_view</item>
     </style>
 
 </resources>

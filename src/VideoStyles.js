@@ -104,14 +104,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    left: 0,
+    width: '95%',
+    alignSelf: 'center',
+    
     bottom: 5 * vw,
   },
   seek: {
-    width: 80 * vh,
+    width: 70 * vh,
+    flex: 18
+  },
+  trackStyle: {
+    backgroundColor: 'rgba(256,256,256,0.4)',
+    height: '8%'
+  },
+  thumbStyle: {
+    height: 3 * vw,
+    width: 3 * vw,
+    borderRadius: 1.5 * vw
   },
   timeLabelText: {
-    flex: 1,
+    flex: 2,
     color: 'white',
     textAlign: 'center',
   },
@@ -123,10 +135,22 @@ const styles = StyleSheet.create({
     fontSize: 4 * vw,
     width: 80 * vh,
   },
+  fullScreenIcon: {
+    flex: 1,
+    width: 10 * vh,
+    height: 4 * vw,
+  },
   settingsIcon: {
     position: 'absolute',
     top: 5 * vw,
     right: 0,
+    width: 10 * vh,
+    height: 4 * vw,
+  },
+  muteIcon: {
+    position: 'absolute',
+    top: 5 * vw,
+    right: 10 * vw,
     width: 10 * vh,
     height: 4 * vw,
   },

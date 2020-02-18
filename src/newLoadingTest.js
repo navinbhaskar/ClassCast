@@ -46,7 +46,8 @@ class newLoadingTest extends Component {
       isReady: false,
       attempted: false,
       maximum_marks: '',
-      duration: ''
+      duration: '',
+      test_available: false
     }
     this.handleBackButton = this.handleBackButton.bind(this);
   }
@@ -86,6 +87,9 @@ class newLoadingTest extends Component {
           }
           //arr.find(currentUser['phoneNumber'].slice(3, 13))
           //console.log("bwabskjsAA: "+arr.find(currentUser['phoneNumber'].slice(3, 13)));
+          this.setState({blocks: res.data.blocks.filter(function (data) { return data.data.length != 0 }) });
+          if(res.data.blocks.filter(function (data) { return data.data.length != 0 }).length != 0)
+            this.setState({ test_available: true });
           this.setState({blocks: res.data.blocks});
           this.setState({loadingCompleted: true});
           this.setState({maximum_marks: res.data.blocks.length * 40});
@@ -102,7 +106,11 @@ class newLoadingTest extends Component {
       axios.post(`https://classcast-198812.appspot.com/teachers/recommendedTestData/`, data)
         .then(function (response){
           console.log("sammasmlas: "+JSON.stringify(response.data));
-          this.setState({blocks: response.data});
+          this.setState({blocks: response.data.filter(function (data) { return data.data.length != 0 }) });
+          if(response.data.filter(function (data) { return data.data.length != 0 }).length != 0){
+            console.log("dsnndlsjss");
+            this.setState({ test_available: true });
+          }
           this.setState({loadingCompleted: true});
           this.setState({maximum_marks: 80});
           this.setState({duration: 40})
@@ -124,7 +132,9 @@ class newLoadingTest extends Component {
       axios.post(`https://classcast-198812.appspot.com/test_updated/get_chapterwise_test_data`, data)
         .then(function (response){
           console.log("sammasmlas: "+JSON.stringify(response.data));
-          this.setState({blocks: response.data});
+          this.setState({blocks: response.data.filter(function (data) { return data.data.length != 0 }) });
+          if(response.data.filter(function (data) { return data.data.length != 0 }).length != 0)
+            this.setState({ test_available: true });
           this.setState({loadingCompleted: true});
           this.setState({maximum_marks: response.data.length * 40});
           this.setState({duration: response.data.length * 20})
@@ -145,7 +155,9 @@ class newLoadingTest extends Component {
 
       axios.post(`https://classcast-198812.appspot.com/test_updated/get_test_data`, data)
         .then(function (response){
-          this.setState({blocks: response.data});
+          this.setState({blocks: response.data.filter(function (data) { return data.data.length != 0 }) });
+          if(response.data.filter(function (data) { return data.data.length != 0 }).length != 0)
+            this.setState({ test_available: true });
           console.log("sammasmlas: "+JSON.stringify(response.data));
           this.setState({loadingCompleted: true});
           this.setState({maximum_marks: response.data.length * 40});
@@ -160,6 +172,9 @@ class newLoadingTest extends Component {
   }
 
   render () {
+    //console.log("samlaskdmsadm: "+JSON.stringify(this.state.blocks.map(section => (section.data.length))))
+    console.log("samlaskdmsadm: "+JSON.stringify(this.state.blocks.filter(function (data) { return data.data.length != 0 })))
+    
       return(
         <View style={styles.container}>
           <View style={{marginLeft:0, marginTop: 0.04 * screen.height, marginBottom: 0.02 * screen.height}}>
@@ -187,7 +202,7 @@ class newLoadingTest extends Component {
               <MaterialIndicator color='purple'/>
             </View>
           }
-          { this.state.loadingCompleted && !this.state.attempted &&
+          { this.state.loadingCompleted && !this.state.attempted && this.state.test_available &&
             <TouchableNativeFeedback
                onPress={() => {
                 const navigateAction = NavigationActions.navigate({
@@ -208,6 +223,11 @@ class newLoadingTest extends Component {
                 <Text style={{fontFamily: 'Montserrat-SemiBold', fontSize: 4 * vw, color: 'white'}}>Agree and Continue</Text>
               </View>
             </TouchableNativeFeedback>
+          }
+          { this.state.loadingCompleted && !this.state.test_available &&
+            <View style={styles.nextButton}>
+                <Text style={{fontFamily: 'Montserrat-SemiBold', fontSize: 4 * vw, color: 'white'}}>Test Not Available</Text>
+              </View>
           }
           { this.state.loadingCompleted && this.state.attempted &&
             <TouchableNativeFeedback

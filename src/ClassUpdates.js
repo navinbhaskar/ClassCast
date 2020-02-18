@@ -8,10 +8,16 @@ import {
   Animated,
   ScrollView,
   Platform,
-  Image
+  Image, 
+  TouchableOpacity,
+  Button
 } from 'react-native'
 import {Icon} from 'react-native-elements';
 import firebase from 'react-native-firebase';
+import axios from "axios";
+import Modal from 'react-native-modal';
+import {NavigationActions} from 'react-navigation';
+
 
 const Header_Maximum_Height = 25 * vh;
  
@@ -25,23 +31,22 @@ class ClassUpdates extends Component {
     this.AnimatedHeaderValue = new Animated.Value(0);
     this.timeSince = this.timeSince.bind(this);
     this.state = {
-      updates: []
+      updates: [],
+      n_updates: 0,
+      selectedUpdate: [],
+      updatesModal: false
     }
   }
 
 async componentDidMount() {
-  
-  await firebase.firestore()
-   .collection('announcement/'+this.props.navigation.state.params.data.teacher_id+'/'+this.props.navigation.state.params.data.batch_id)
-    .get()
-    .then(snapshot => {
-      snapshot
-        .docs
-        .forEach(doc => {
-          
-          this.setState({updates:[...this.state.updates, doc.data()]});
-        });
-    }); 
+  axios.get('https://classcast-198812.appspot.com/users/announcements_updated')
+      .then(function (response){
+        this.setState({n_updates: response.data.length});
+        this.setState({updates: response.data.sort(function(a,b){ return new Date(b.time) - new Date(a.time) }) });
+      }.bind(this))
+      .catch(function(error){
+        console.log('naldndskajdewnkesakerror1: '+error);
+      });
   }
 
   timeSince(date) {
@@ -49,7 +54,7 @@ async componentDidMount() {
     //ToastArndroid.show(date, ToastAndroid.SHORT);
     var dif =  new Date() - date;
     var seconds = Math.floor(parseFloat(dif / 1000));
-    
+
 
     var interval = Math.floor(parseFloat(seconds / 31536000));
 
@@ -81,6 +86,11 @@ async componentDidMount() {
     console.log("date1: "+item.time);
     console.log("data1: "+this.timeSince(new Date(item.time)));
     return (
+        <TouchableOpacity style={{flex: 1, flexDirection: 'row', marginTop: 0.8 * vh, marginBottom: 0.8 * vh, width: '98%', alignSelf: 'center', elevation: 2, borderRadius: 2 * vw}} 
+          onPress={() => {
+            this.setState({selectedUpdate: item});
+            this.setState({updatesModal: true}) 
+          }}>
             <View style ={{flexDirection:'row', borderRadius:5, width: '100%', marginTop: 1 * vh, marginBottom: 1 * vh, alignSelf: 'flex-start', padding: 2 * vw}}>
               <Icon     name='message'
                         color='grey'
@@ -88,14 +98,13 @@ async componentDidMount() {
                         size= {35} />
               <View style={{marginLeft: 2 * vw, width: '100%'}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '80%'}}>
-                  <Text style={{fontSize: 15, color:'grey', fontWeight: 'bold', textTransform: 'capitalize'}}> {item.type} </Text>
+                  <Text style={{fontFamily: 'Montserrat-SemiBold', fontSize: 15, color:'grey', fontWeight: 'bold', textTransform: 'capitalize'}}> {item.type} </Text>
                   <Text style={{color: '#4286f4', fontSize: 15, fontStyle: 'italic', textAlign: 'center'}}>{this.timeSince(new Date(item.time)) + ' ago'}</Text>
                 </View>
-                <Text style={{fontSize: 16, color:'grey'}}> {item.message} </Text>
+                <Text style={{ fontSize: 16, color:'black', width: '80%'}}> {item.message} </Text>
               </View>
-             
             </View>
-
+        </TouchableOpacity>
          );
     }
   
@@ -121,9 +130,82 @@ async componentDidMount() {
 
     return (
       <View style={styles.container}>
+
+        <Modal
+            backdropOpacity={0.6}
+            backdropColor="black"
+            transparent={true}
+            isVisible={this.state.updatesModal}
+            onRequestClose={() => {
+              this.setState({updatesModal: false})
+            }}>
+            <View style={[styles.tncModal, {height: 'auto'}]}>
+              <Text style={styles.tncHeadingBig}>Announcement</Text>
+              <ScrollView>
+                <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
+
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontFamily: 'Montserrat-Regular', fontSize: 4 * vw, textDecorationLine: 'none', color: 'black'}}>{this.state.selectedUpdate.message}</Text>
+                  </View>
+                  { this.state.selectedUpdate.action != 'null' && this.state.selectedUpdate.action != 'expired' &&
+                  <View style={{alignSelf: 'center', marginTop: 2 * vh}}>
+                    <Button
+                        onPress={()=> {
+                          this.setState({updatesModal: false});
+                          if(this.state.selectedUpdate.action == 'pdf')
+                          {
+                            const navigateAction = NavigationActions.navigate({
+                              routeName: 'pdfViewer',
+                              params: {
+                                url: this.state.selectedUpdate.payload
+                              },
+                            });
+                            this.props.navigation.dispatch(navigateAction);
+                          } 
+                          else if(this.state.selectedUpdate.action == 'weburl')
+                          {
+                            const navigateAction = NavigationActions.navigate({
+                              routeName: 'webViewer',
+                              params: {
+                                url: this.state.selectedUpdate.payload
+                              },
+                            });
+                            this.props.navigation.dispatch(navigateAction);
+                          } 
+
+                          else if(this.state.selectedUpdate.action == 'start')
+                          {
+                            const navigateAction = NavigationActions.navigate({
+                              routeName: 'loading',
+                              params: {
+                                duration: 15,
+                                goal: 'Practice Test',
+                                test_id: this.state.selectedUpdate.payload,
+                                chapterAvailable: false,
+                                path: 'TabB_test',
+                                chapter_name: '',
+                                subject: '',
+                              }
+                            });
+                            this.props.navigation.dispatch(navigateAction);
+                          }
+
+                        }}
+                        title="Open"
+                        color="#841584"
+                        accessibilityLabel="Learn more about this purple button"
+                      />
+                    </View>
+                  }
+                </View>
+                </ScrollView>
+            </View>
+
+        </Modal>
+
         <ScrollView 
-      keyboardShouldPersistTaps='handled'
-      scrollEventThrottle = { 16 }
+        keyboardShouldPersistTaps='handled'
+        scrollEventThrottle = { 16 }
 
         style ={{zIndex: 1, width: '100%'}}
         showsVerticalScrollIndicator={false}
@@ -279,12 +361,33 @@ const styles = StyleSheet.create({
   },
   HeaderStyle:
   {
-      justifyContent: 'center',
-      alignItems: 'center',
-      position: 'absolute',
-      width: '100%',
-      left: 0,
-      right: 0,
-      top: (Platform.OS == 'ios') ? 20 : 0,
-  }
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    width: '100%',
+    left: 0,
+    right: 0,
+    top: (Platform.OS == 'ios') ? 20 : 0,
+  },
+  tncModal: {
+   height: 80 * vh,
+   width: 90 * vw,
+   backgroundColor: 'white',
+   borderRadius: 1.5 * vw,
+   paddingTop: 5 * vh,
+   paddingLeft: 7.5 * vw,
+   paddingRight: 7.5 * vw,
+   paddingBottom: 5 * vh,
+ },
+ tncHeadingBig: {
+   fontSize: 6 * vw,
+   color: 'black',
+   fontFamily: 'Montserrat-Bold',
+   marginBottom: 2 * vh,
+ },
+ tncText: {
+   color: 'black',
+   fontSize: 3.5 * vw,
+   marginBottom: 2 * vh,
+ },
 })

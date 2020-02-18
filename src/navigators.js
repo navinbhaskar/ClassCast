@@ -75,7 +75,15 @@ import addDetails from './addDetails';
 import newLoadingGym from './newLoadingGym';
 import profileProgress from './profileProgress';
 import webViewer from './webView';
-
+import test_list from './teacher_home/test_list';
+import viewTest from './teacher_home/viewTest';
+import imageList from './imageList';
+import youtubeVideo from './youtubePlayer';
+import crashCourse from './crash_course/crashCourse';
+import studyMaterial from './crash_course/studyMaterial';
+import discussion from './crash_course/discussion';
+import selectPackage from './crash_course/selectPackage';
+import youTubeWebView from './youTubeWebView';
 
 export const PlaygroundGym = createStackNavigator({
   test3: { screen: createGym },
@@ -250,6 +258,19 @@ export const TeacherHomeNavigator = createBottomTabNavigator({
       </View>
       )
   } },
+  Tests: { screen: test_list, navigationOptions: {
+    tabBarIcon: ({ tintColor }) => (
+      <View Style={{height: 5 * vh, width: 5 * vh,  justifyContent: 'center', alignItems: 'center',}}>
+        <Icon
+          name='archive'
+          type='font-awesome'
+          size={ tintColor == '#6044f0' ? 8 * vw: 6 * vw}
+          color= {tintColor}
+        />
+        <Text style={{fontSize: 2.8 * vw, fontFamily: 'Montserrat-Bold', color: tintColor,}}>Tests</Text>
+      </View>
+      )
+  } },
   
 }, {
   tabBarComponent: props => (
@@ -267,6 +288,45 @@ export const TeacherHomeNavigator = createBottomTabNavigator({
   initialRouteName: 'Courses',
 })
 
+
+export const crashCourseNavigator = createMaterialTopTabNavigator({
+  Courses: { screen: crashCourse, navigationOptions: {
+    tabBarIcon: ({ tintColor }) => (
+      <View Style={{height: 5 * vh, width: 5 * vh, justifyContent: 'center', alignItems: 'center', elevation: 3}}>
+        <Text style={{fontSize: 3 * vw, fontFamily: 'Montserrat-Bold', color: tintColor,}}>Videos</Text>
+      </View>
+      )
+  } },
+  discussion: { screen: discussion, navigationOptions: {
+    tabBarIcon: ({ tintColor }) => (
+      <View Style={{height: 5 * vh, width: 5 * vh,  justifyContent: 'center', alignItems: 'center',}}>
+        <Text style={{fontSize: 3 * vw, fontFamily: 'Montserrat-Bold', color: tintColor,}}>Discussions</Text>
+      </View>
+      )
+  } },
+  studyMaterial: { screen: studyMaterial, navigationOptions: {
+    tabBarIcon: ({ tintColor }) => (
+      <View Style={{height: 5 * vh, width: 5 * vh,  justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{fontSize: 3 * vw, fontFamily: 'Montserrat-Bold', color: tintColor,}}>Materials</Text>
+      </View>
+      )
+  } },
+  
+}, {
+  tabBarComponent: props => (
+  <CustomTabBar
+      {...props}/> ),
+  tabBarOptions: {
+    activeTintColor: "#6044f0",
+    inactiveTintColor: "#c1c8db",
+    inactiveTintColor: "#aeadb2",
+    style: {
+    backgroundColor: '#222126',
+  },
+  },
+  lazy: true,
+  initialRouteName: 'Courses',
+})
 
 export const HomeStack = createStackNavigator({
   Home: { screen: Tabs },
@@ -307,6 +367,21 @@ export const HomeStack = createStackNavigator({
   chatScreen: { screen: chatScreen},
   newChat: { screen: newChat },
   webViewer: { screen: webViewer },
+  viewTest: { screen: viewTest },
+  imageList: { screen: imageList },
+  discussion: { screen: discussion },
+  selectPackage: { screen: selectPackage },
+  
+  crashCourseNavigator: { screen: crashCourseNavigator,
+    navigationOptions: ({ navigation }) => ({
+                    headerTitle: <Text style={{fontFamily: 'Montserrat-SemiBold', fontSize: 3 * vh, color: 'white'}}>{navigation.state.params.display_name}</Text> ,
+                    headerStyle: {
+                      backgroundColor: '#874acf',
+                    },
+                    headerTitleStyle: { color: 'white' },
+                    headerTintColor: 'white',
+                }),
+   },
   notification: { screen: notifications,
     navigationOptions: { 
       headerTitle: <Text style={{fontFamily: 'Montserrat-SemiBold', fontSize: 3 * vh, color: 'white'}}>Notification</Text>  
@@ -347,6 +422,7 @@ export const Login1 = createStackNavigator({
 export const Authstack = createSwitchNavigator({
   Login2: {screen: Login1},
   AuthCheck: {screen: AuthCheck},
+  youtubeVideo: { screen: youtubeVideo },
   Drawer: {screen: Drawer}
 }, {
   lazy: true,

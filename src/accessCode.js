@@ -127,10 +127,10 @@ class accessCode extends Component {
         <TouchableWithoutFeedback
           onPress={() => {
             var data = {
-              "student": this.state.username,
+              "teacher_id": "10",
               "access_code": this.state.access_code
             }
-            axios.post('https://classcast-198812.appspot.com/accesstoken/enroll/', data)
+            axios.post('https://classcast-198812.appspot.com/accesstoken/enrollment_from_token_white_label/', data)
               .then((response) => 
               {
                 console.log("bkjbkjb: "+JSON.stringify(response.data));
@@ -153,6 +153,7 @@ class accessCode extends Component {
                   this.props.navigation.dispatch(navigateAction);
               })
               .catch((error) => {
+                  console.log("bkjbkjb: "+JSON.stringify(error));
                   ToastAndroid.show('Invalid code', ToastAndroid.SHORT);
               })
           }}

@@ -2317,7 +2317,12 @@ escape-html@~1.0.3:
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
-escape-string-regexp@1.0.5, escape-string-regexp@^1.0.5:
+escape-string-regexp@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
+  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
+
+escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
@@ -4702,7 +4707,7 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment@^2.19.0:
+moment@^2.19.0, moment@^2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
@@ -5366,7 +5371,7 @@ prop-types@15.6.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5621,6 +5626,11 @@ react-native-ratings@^6.3.0:
     lodash "^4.17.4"
     prop-types "^15.5.10"
 
+react-native-razorpay@^2.1.30:
+  version "2.1.30"
+  resolved "https://registry.yarnpkg.com/react-native-razorpay/-/react-native-razorpay-2.1.30.tgz#c73a183b9caa8476d8abdbdcfd4c6ebe4ceb2fe9"
+  integrity sha512-jbDcps8cIwEkrBXChEKgwEwmtp0/QKbWJzEa+c4T7dLFLxgxqqbD3YPC+6M0YqKIlXEBisqY4O4t52YV+nfNyA==
+
 react-native-safe-area-view@^0.14.1:
   version "0.14.7"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.14.7.tgz#e1dd1c4d25a90677df2c15347fdddb2306ba5971"
@@ -5645,10 +5655,17 @@ react-native-simple-contacts@^1.0.2:
   resolved "https://registry.yarnpkg.com/react-native-simple-contacts/-/react-native-simple-contacts-1.0.2.tgz#7ba4a052d2e8f10f73234bd890a7f8c51cb9c591"
   integrity sha512-t5Vr+T78D+QRwxL0ZVLpgq1N+NCBEROGW1GzFNgQ3qh/Z4TtR0gQH1bduGUPpvPX+DOMqViUFy4GyT2lr+dtBg==
 
-react-native-snap-carousel@^3.8.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.8.0.tgz#9372222d61d37d0a8a3bec423d135d0caa1b7595"
-  integrity sha512-YtDZLv2Di77HfnH4yf+NyyYyISPNjrnjXDQLrzOkG9kkSlho/BROgHLQKGRLg3C2YSUMArFOePrb9CH3yeV5FA==
+react-native-slider@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-slider/-/react-native-slider-0.11.0.tgz#b68a0bc43c8422b24cd57947cc5ac2bcdb58fadc"
+  integrity sha512-jV9K87eu9uWr0uJIyrSpBLnCKvVlOySC2wynq9TFCdV9oGgjt7Niq8Q1A8R8v+5GHsuBw/s8vEj1AAkkUi+u+w==
+  dependencies:
+    prop-types "^15.5.6"
+
+react-native-snap-carousel@^3.8.1:
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.8.1.tgz#8b1f6835027ec88bce91335571022f5448dfd230"
+  integrity sha512-zxfk7TYfWMnOc4UAK/FCZ1H63f/D3ND6Jy3FASVnHNfhRkP2T119iHMXAjYUia/gVztH57kNpuhEXuWRAuz9iQ==
   dependencies:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
@@ -5723,13 +5740,20 @@ react-native-video@^5.0.0:
     prop-types "^15.5.10"
     shaka-player "^2.4.4"
 
-react-native-webview@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-7.0.1.tgz#ea2650d30acaa1fd443595d9f7f2a2648f54e0b5"
-  integrity sha512-KySHdf/nvGgFXwQEb7AH8id2dYdzSiIqWjMPdlql6+5Gi9kaEGiojGabXV2UYJRNk54Y8COFMDr65zdgdLlctw==
+react-native-webview@^7.2.5:
+  version "7.2.5"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-7.2.5.tgz#00cb63f768c228e1ed7ab9d164fc2e7aa359f796"
+  integrity sha512-RAUgurKZi73srEywG1W1HPTrcUjlbiRuZljzjbOwBLjdtKs8rRwaWLuByaxYnCgoYaF8uDyVSTsuVAKkwb1oMQ==
   dependencies:
-    escape-string-regexp "1.0.5"
+    escape-string-regexp "2.0.0"
     invariant "2.2.4"
+
+react-native-youtube@^2.0.0-beta.2:
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/react-native-youtube/-/react-native-youtube-2.0.0-beta.2.tgz#bc1182c90a9d5f274ecf7cbab62ff30d9ad0ab8b"
+  integrity sha512-Rc5Rinbj7KflnwGIoB9kfaFSzzBJP4yRiGAusEEjuTIuEsIkPvTzLVD+Vqj/Sr76wK1zHWg3iwkNBo/Hp87qmA==
+  dependencies:
+    prop-types "^15.5.0"
 
 react-native@0.60.5:
   version "0.60.5"

@@ -15,8 +15,7 @@ import {
   StatusBar,
   Animated,
   Dimensions,
-  BackHandler,
-  WebView
+  BackHandler
 } from 'react-native';
 import VideoPlayer from 'react-native-video';
 import {Icon} from 'react-native-elements';
@@ -24,6 +23,7 @@ import Carousel from 'react-native-snap-carousel';
 import { ProgressCircle } from 'react-native-svg-charts';
 import axios from 'axios';
 import Orientation from 'react-native-orientation';
+import WebView from 'react-native-webview';
 
 class webViewer extends Component {
 
@@ -71,11 +71,13 @@ class webViewer extends Component {
   }
   
   render() {
+    console.log("mlasndlakna: "+this.props.navigation.state.params.url);
     const source = {uri: this.props.navigation.state.params.url , cache: true};
     return (
       <WebView
+        ref={r => this.webview = r}
         source={{uri: this.props.navigation.state.params.url}}
-        style={{marginTop: 20}}
+        style={{height: '100%', width: '100%'}}
       />
     )
 

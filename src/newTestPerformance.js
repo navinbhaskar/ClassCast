@@ -77,13 +77,26 @@ class newTestPerformance extends Component {
     .catch((error) => {console.log("API error")})
 
     data = {
+      "test_id": this.props.navigation.state.params.test_id,
       "goal": this.props.navigation.state.params.goal,
       "subject": this.props.navigation.state.params.subject,
       "data": this.props.navigation.state.params.blocks.map(section => ({ section_name: section.section_name, data: section.data.map(question=> ({ question_id: question._id, isCorrect: question.selectedOption == question.correctOption, attempted: question.attempted}) ) }) )
     }
-    axios.post(`https://classcast-198812.appspot.com/test_updated/save_test_performance`, data)
-    .then((response) => {console.log("API response" )})
-    .catch((error) => {console.log("API error")})
+    axios.post(`https://classcast-198812.appspot.com/test_updated/save_test_performance_updated`, data)
+    .then((response) => {
+      console.log("API_response: "+ JSON.stringify(response.data));
+    })
+    .catch((error) => {console.log("API_error")})
+
+    data2 = {
+      "test_id": this.props.navigation.state.params.test_id,
+      "blocks": this.props.navigation.state.params.blocks
+    }
+    axios.post(`https://classcast-198812.appspot.com/test_updated/save_test_data`, data2)
+    .then((response) => {
+      console.log("API_response2: "+ JSON.stringify(response.data));
+    })
+    .catch((error) => {console.log("API_response2API_error: "+error)})
 
 
     if(this.props.navigation.state.params.path == 'TabB_test') {

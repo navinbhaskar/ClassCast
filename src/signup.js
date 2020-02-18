@@ -37,7 +37,6 @@ const MAX_LENGTH_NUMBER = 20;
 export default class Signup extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isReady: true,
       isLoading: false,
@@ -62,7 +61,6 @@ export default class Signup extends Component {
       OTP6:'',
       optVarificationLoader: false,
     };
-
     this.setSelectedType = this.setSelectedType.bind(this);
     this.validatePhone = this.validatePhone.bind(this);
     this.signon = this.signon.bind(this);
@@ -72,6 +70,7 @@ export default class Signup extends Component {
 
 
   async auth() {
+    console.log("smoslL3: "+this.state.phoneIN);
     LayoutAnimation.easeInEaseOut();
     const phoneValid = await this.validatePhone();
     if (phoneValid && this.state.phoneIN!='') {
@@ -115,7 +114,7 @@ export default class Signup extends Component {
       }, (error) => {
         // optionalErrorCb would be same logic as the ERROR case above,  if you've already handed
         // the ERROR case in the above observer then there's no need to handle it here
-        console.log('error');
+        console.log('error: '+error);
         ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
         this.setState({isReady: true});
         //this.setState({phone: ''});
@@ -174,6 +173,7 @@ export default class Signup extends Component {
 
   validatePhone() {
     const { phone, phoneIN } = this.state;
+    console.log("smoslL1: "+this.state.phoneIN);
     const phoneValid = phone.length=10;
     LayoutAnimation.easeInEaseOut();
     this.setState({phoneIN: '+'+91 + ''+ phone});
@@ -212,6 +212,7 @@ export default class Signup extends Component {
   }
 
   render() {
+    console.log("smoslL "+this.state.phoneIN);
     const {
       isLoading,
       selectedType,

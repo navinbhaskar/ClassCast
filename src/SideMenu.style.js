@@ -17,6 +17,12 @@ export default {
    fontSize: 3.5 * vw,
    fontFamily: 'Montserrat-SemiBold',
  },
+ h4: {
+    paddingBottom: 0 * vh,
+    fontSize: 2 * vh,
+    color: 'white',
+    fontFamily: 'ProximaNova-Regular',
+  },
  imageModal: {
     height: 30 * vh,
     width: 70 * vw,
@@ -56,23 +62,27 @@ export default {
    borderRadius: 15 * vw,
  },
  userImageContainer: {
-  height: 30 * vw,
-  width: 30 * vw,
-  borderRadius: 15 * vw,
+  height: 25 * vw,
+  width: 25 * vw,
+  borderRadius: 12.5 * vw,
   padding: 0.6 * vw,
   backgroundColor: '#29206f'
  },
   userName: {
    fontSize: 3.5 * vh,
-   margin: 1 * vh,
-   color: '#7165cb',
-   fontFamily: 'ProximaNova-Regular',
+   color: '#211482',
+   fontFamily: 'Montserrat-Bold',
+ },
+ editProfile: {
+  color: 'grey', 
+  fontSize: 3.5 * vw,
+  fontFamily: 'Montserrat-SemiBold', 
+  textDecorationLine: 'underline'
  },
  class: {
   fontSize: 2.5 * vh,
-  color: '#7165cb',
-  marginLeft: 1 * vh,
-  fontFamily: 'ProximaNova-Regular',
+  color: '#211482',
+  fontFamily: 'Montserrat-SemiBold',
 },
  aboutUserSection:{
    marginTop: 2 * vh,

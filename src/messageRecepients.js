@@ -55,7 +55,7 @@ export default class messageRecepients extends Component {
                           isReady: true
              })
       })
-      .catch(err=> {console.log("errorrr: "+err)});
+      .catch(err=> {console.log("chat_listerrorrr: "+err)});
 
     axios.get(`https://classcast-198812.appspot.com/teachersapp/updateMessageSeenStatus`)
   }

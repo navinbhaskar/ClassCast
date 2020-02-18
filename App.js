@@ -6,11 +6,18 @@ import SplashScreen from 'react-native-splash-screen';
 
 export default class App extends React.Component {
 
-  componentDidMount() {
-  	SplashScreen.hide();
-  }
+	async componentDidMount() {
+		SplashScreen.hide();
+	}
 
-  render() {
-    return <AuthFlowContainer />;
-  }
+	componentWillUnmount() {
+	  //this.notificationListener();
+	  //this.notificationOpenedListener();
+	}
+
+	
+
+	render() {
+		return <AuthFlowContainer />;
+	}
 }

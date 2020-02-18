@@ -22,6 +22,7 @@ import {NavigationActions} from 'react-navigation';
 import { ProgressCircle }  from 'react-native-svg-charts';
 import axios from 'axios';
 import {MaterialIndicator} from 'react-native-indicators';
+import {Circle} from 'react-native-progress';
 //import * as Progress from 'react-native-progress';
 
 const screen = Dimensions.get('window'),
@@ -31,14 +32,15 @@ const screen = Dimensions.get('window'),
 
 class CourseHome extends Component {
 
-  navigateToScreen = (route, url, block_id, course_id) => {
+  navigateToScreen = (route, url, block_id, course_id, name) => {
     console.log("saklndlknA: "+route);
     const navigateAction = NavigationActions.navigate({
       routeName: route,
       params: {
         url: url,
         block_id: block_id,
-        course_id: course_id
+        course_id: course_id,
+        name: name
       },
     });
     this.props.navigation.dispatch(navigateAction);
@@ -94,7 +96,7 @@ class CourseHome extends Component {
         .then( response => {
           console.log("gkyyufyifSS: "+JSON.stringify(response.data));
           this.setState({startBuffering: false});
-          this.navigateToScreen('video', response.data, data.block_id, this.props.navigation.state.params.course_id);
+          this.navigateToScreen('video', response.data, data.block_id, this.props.navigation.state.params.course_id, 'video');
           //this.navigateToScreen('video', response.data);
         })
         .catch(err => {
@@ -116,12 +118,13 @@ class CourseHome extends Component {
     //this.setState({title: this.props.navigation.state.params.display_name});
       //this.setState({completion: this.props.navigation.state.params.percentage_completion});
       axios.get('https://classcast-198812.appspot.com/coursedata/courseblocks/'+this.props.navigation.state.params.course_id+'/')
-                .then(function (response){
+                .then(response =>{
                   console.log("sdabskj: "+JSON.stringify(response.data));
                   this.setState({startBuffering: false});
                   this.setState({blocks: response.data.blocks});
-                }.bind(this))
-                .catch(function (error) {
+                })
+                .catch(error=>{
+                  console.log("sdabskjerror: "+error);
                   console.log("error");
                   this.setState({startBuffering: false});
                 });
@@ -139,7 +142,7 @@ class CourseHome extends Component {
       })
   }
 
-  render() {     
+  render() {
     return (
             <View style={{height: 100*vh, width: '100%', justifyContent: 'center',  alignItems: 'center', flex: 1}}>
             <Modal
@@ -191,9 +194,13 @@ class CourseHome extends Component {
                     </View>
                   </View>
                   <View style = {styles.progress}>
-                    
-                      <Text style={{ color: '#ffffff', fontSize: 24}}> {this.state.completion.toFixed(2)+'%'} </Text>
-                      <Text style={[styles.videoCount, {color: '#ffffff'}]}> Completed </Text>
+                      <View style={{height: 30 * vw, width: 30 * vw, alignSelf: 'center', alignItems: 'center', justifyContent: 'center'}}>
+                        <Circle size={22 * vw} progress={this.state.completion/100} color={'white'} showsText={true} textStyle={{fontSize: 1.5 * vh, color: 'white', textAlign: 'center', fontFamily: 'Montserrat-SemiBold'}}
+                          formatText={() => {
+                            return `${this.state.completion.toFixed(2)}%\nCompleted`
+                        }} />
+                      </View>
+                      
                   </View>
                 </View>
 
@@ -225,7 +232,7 @@ class CourseHome extends Component {
                                       .then( response => {
                                         console.log("nkaskajxasaa: "+JSON.stringify(response.data));
                                         this.setState({startBuffering: false});
-                                        this.navigateToScreen('video', response.data, data.block_id, this.props.navigation.state.params.course_id);
+                                        this.navigateToScreen('video', response.data, data.block_id, this.props.navigation.state.params.course_id, data.display_name);
                                       })
                                       .catch(err => {
                                         this.setState({startBuffering: false});
@@ -278,7 +285,7 @@ class CourseHome extends Component {
                                     })
                                       .then( response => {
                                         this.setState({startBuffering: false});
-                                        this.navigateToScreen('pdfViewer', response.data, data.block_id, this.props.navigation.state.params.course_id);
+                                        this.navigateToScreen('pdfViewer', response.data, data.block_id, this.props.navigation.state.params.course_id, data.display_name);
                                         //this.navigateToScreen('pdfViewer', response.data);
                                       })
                                     }
@@ -322,7 +329,7 @@ class CourseHome extends Component {
                                       .then( response => {
                                         
                                         this.setState({startBuffering: false});
-                                        this.navigateToScreen('assignmentQuestions', response.data, data.block_id, this.props.navigation.state.params.course_id);
+                                        this.navigateToScreen('assignmentQuestions', response.data, data.block_id, this.props.navigation.state.params.course_id, data.display_name);
                                         //this.navigateToScreen('assignmentQuestions', response.data);
                                       })
                                       .catch(err=> {
@@ -437,7 +444,6 @@ const styles = StyleSheet.create({
     color: 'white'
     },
   progress: {
-    margin: .6 * vh,
     alignItems: 'center',
     justifyContent: 'center',
   },

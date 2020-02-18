@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:633109830849:android:ab7536c6a781265a",
         "android_client_info": {
-          "package_name": "com.classcast"
+          "package_name": "com.apexeducation.classcast"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "633109830849-k66rt069jjbebcmpcvlmomouioi16c85.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.classcast",
+            "package_name": "com.apexeducation.classcast",
             "certificate_hash": "fdcfe5d9184c35291c03b452a51c3a8bfacc784f"
           }
         },

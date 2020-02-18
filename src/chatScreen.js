@@ -19,7 +19,7 @@ import {GiftedChat, Bubble, SystemMessage, Message} from 'react-native-gifted-ch
 import Pdf from 'react-native-pdf';
 import Modal from 'react-native-modal';
 import ImagePicker from 'react-native-image-crop-picker';
-import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import DocumentPicker from 'react-native-document-picker';
 import axios from 'axios';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -246,7 +246,7 @@ export default class Example extends Component {
   uploadFile(uri, name, type, counter){
     let path= 'something/' + name;
     let uploaded = false;
-    console.log('dsdasi :'+uri);
+    console.log('dsdasiasjkdakjsjaskd :'+name);
     firebase.storage()
         .ref(path)
         .putFile(uri).on(
@@ -344,20 +344,21 @@ export default class Example extends Component {
     })
   }
 
-  filePicker(){
-    DocumentPicker.show({
-      filetype: [DocumentPickerUtil.pdf()],
-    },(error,res) => {
-      // Android
-      if(error) {
-        console.log("error3")
-      }
-      else {
-      	this.createTempMsg(res.uri, res.fileName, "doc")
-      	this.uploadFile(res.uri, res.fileName, "doc", this.state.counter)
-      	this.setState({counter: this.state.counter +1}) 
-      }
+  async filePicker(){
+
+    const res = await DocumentPicker.pick({
+      type: [DocumentPicker.types.pdf],
     });
+    this.createTempMsg(res.uri, res.name, "doc")
+    this.uploadFile(res.uri, res.name, "doc", this.state.counter)
+    this.setState({counter: this.state.counter +1}) 
+  } catch (err) {
+    if (DocumentPicker.isCancel(err)) {
+      // User cancelled the picker, exit any dialogs or menus and move on
+    } else {
+      throw err;
+    }
+
   }
 
   chatActions(){

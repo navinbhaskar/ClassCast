@@ -2,4 +2,4 @@ import  App  from './App'
 //import App from './test'
 import { AppRegistry }  from 'react-native'
 
-AppRegistry.registerComponent('classcast', () => App );
+AppRegistry.registerComponent('apexeducation.classcast', () => App );

@@ -99,6 +99,7 @@ class newOngoingTest extends Component {
   }
 
   submitTest() {
+    console.log("fdsjkdsknds : "+JSON.stringify(this.state.blocks));
     this.setState({
       showReviewModal: false,
       showSubmitModal: false
@@ -206,6 +207,7 @@ class newOngoingTest extends Component {
               { this.state.loading &&
                 <FlatList
                   horizontal={true}
+                  ref={(ref) => { this.flatListRef = ref; }}
                   showsHorizontalScrollIndicator={false}
                   data={this.props.navigation.state.params.blocks[this.state.selectedSection].data}
                   renderItem={this._renderQuestionIndex}
@@ -342,6 +344,7 @@ class newOngoingTest extends Component {
                     temp = this.state.sections;
                     temp[this.state.selectedSection].active_question_number = this.state.questionIndex-1;
                     this.setState({sections: temp});
+                    this.flatListRef.scrollToIndex({animated: true, index: this.state.questionIndex-1});
                     this.setState({questionIndex: this.state.questionIndex-1});
                   }
                  }}
@@ -358,6 +361,7 @@ class newOngoingTest extends Component {
                     temp = this.state.sections;
                     temp[this.state.selectedSection].active_question_number = this.state.questionIndex+1;
                     this.setState({sections: temp});
+                    this.flatListRef.scrollToIndex({animated: true, index: this.state.questionIndex+1});
                     this.setState({questionIndex: this.state.questionIndex+1});
                   }
                   else {
